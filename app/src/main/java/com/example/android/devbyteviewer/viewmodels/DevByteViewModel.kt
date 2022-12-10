@@ -44,19 +44,6 @@ import java.io.IOException
 class DevByteViewModel(application: Application) : AndroidViewModel(application) {
     private val videosRepository = VideosRepository(getDatabase(application))
 
-    /**
-     * A playlist of videos that can be shown on the screen. This is private to avoid exposing a
-     * way to set this value to observers.
-     */
-    private val _playlist = MutableLiveData<List<DevByteVideo>>()
-
-    /**
-     * A playlist of videos that can be shown on the screen. Views should use this to get access
-     * to the data.
-     */
-    val playlist: LiveData<List<DevByteVideo>>
-        get() = _playlist
-
 
 
     /**
@@ -90,8 +77,9 @@ class DevByteViewModel(application: Application) : AndroidViewModel(application)
      */
     init {
         refreshDataFromRepository()
-    }
 
+    }
+    val playlist = videosRepository.videos
     /**
      * Refresh data from network and pass it via LiveData. Use a coroutine launch to get to
      * background thread.
